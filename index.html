@@ -1,0 +1,1994 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dima Pivo — Ресторан русской кухни</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c9a84c;
+            --gold-light: #e8d5a3;
+            --gold-dark: #a8892e;
+            --dark: #1a1410;
+            --dark-soft: #2a221c;
+            --cream: #faf6ef;
+            --cream-dark: #f0e8dc;
+            --text: #3d342e;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.20);
+            --radius: 16px;
+            --transition: 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--cream-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gold-dark);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background: var(--gold);
+            color: var(--white);
+            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(201, 168, 76, 0.45);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-outline:hover {
+            background: var(--gold);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .btn-dark {
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .btn-dark:hover {
+            background: var(--dark-soft);
+            transform: translateY(-2px);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 18px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(26, 20, 16, 0.95);
+            backdrop-filter: blur(12px);
+            padding: 12px 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 0.08em;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .navbar .logo span {
+            color: var(--gold);
+        }
+
+        .navbar .logo i {
+            color: var(--gold);
+            font-size: 1.4rem;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links .cart-btn {
+            background: var(--gold);
+            color: var(--white);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-links .cart-btn:hover {
+            background: var(--gold-dark);
+            transform: scale(1.04);
+        }
+
+        .nav-links .cart-btn .badge {
+            background: var(--dark);
+            color: var(--white);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* Mobile menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 2.5px;
+            background: var(--white);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #1a1410 0%, #2a221c 50%, #1a1410 100%);
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.10) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(201, 168, 76, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            inset: 0;
+            opacity: 0.04;
+            background-image:
+                repeating-linear-gradient(45deg, var(--gold) 0px, var(--gold) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            padding-top: 40px;
+        }
+
+        .hero-content h1 {
+            font-size: 4.2rem;
+            color: var(--white);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .hero-content h1 span {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            max-width: 460px;
+            margin-bottom: 32px;
+            line-height: 1.8;
+        }
+
+        .hero-content .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-image .plate {
+            width: 420px;
+            height: 420px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), inset 0 -10px 40px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero-image .plate i {
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.20);
+            text-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-image .plate .label {
+            position: absolute;
+            bottom: 20%;
+            font-family: 'Playfair Display', serif;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-stats .stat h3 {
+            color: var(--gold);
+            font-size: 1.8rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+        }
+
+        .hero-stats .stat p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 56px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .section-title h2 span {
+            color: var(--gold);
+        }
+
+        .section-title p {
+            color: rgba(61, 52, 46, 0.6);
+            font-size: 1.05rem;
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .section-title .line {
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+            margin: 12px auto 0;
+            border-radius: 4px;
+        }
+
+        /* ===== ABOUT ===== */
+        .about {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .about .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-image {
+            background: var(--cream-dark);
+            border-radius: var(--radius);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: var(--gold);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::after {
+            content: 'С 1998';
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: rgba(201, 168, 76, 0.2);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+
+        .about-text h3 span {
+            color: var(--gold);
+        }
+
+        .about-text p {
+            color: rgba(61, 52, 46, 0.8);
+            margin-bottom: 16px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .about-text .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .about-text .features li {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .about-text .features li i {
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+
+        /* ===== MENU ===== */
+        .menu {
+            padding: 100px 0;
+            background: var(--cream);
+        }
+
+        .menu-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+
+        .menu-tabs button {
+            padding: 12px 28px;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            background: var(--white);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .menu-tabs button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .menu-tabs button.active {
+            background: var(--gold);
+            color: var(--white);
+            border-color: var(--gold);
+            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.35);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 28px 28px 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid rgba(201, 168, 76, 0.08);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--gold-light);
+        }
+
+        .menu-item .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .item-header h4 {
+            font-size: 1.2rem;
+            color: var(--dark);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .menu-item .item-header .price {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--gold);
+            background: rgba(201, 168, 76, 0.10);
+            padding: 2px 14px;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+
+        .menu-item .description {
+            color: rgba(61, 52, 46, 0.7);
+            font-size: 0.92rem;
+            margin: 8px 0 16px;
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .menu-item .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .menu-item .item-footer .weight {
+            font-size: 0.8rem;
+            color: rgba(61, 52, 46, 0.4);
+        }
+
+        .menu-item .add-btn {
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .menu-item .add-btn:hover {
+            background: var(--gold-dark);
+            transform: scale(1.04);
+        }
+
+        .menu-item .add-btn i {
+            font-size: 0.8rem;
+        }
+
+        .menu-item .badge-popular {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--gold);
+            color: var(--white);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 4px 14px;
+            border-radius: 30px;
+        }
+
+        /* ===== CART SIDEBAR ===== */
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 460px;
+            max-width: 92vw;
+            height: 100%;
+            background: var(--white);
+            z-index: 2001;
+            padding: 32px 28px;
+            transition: var(--transition);
+            box-shadow: -8px 0 40px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-sidebar .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--cream-dark);
+            margin-bottom: 20px;
+        }
+
+        .cart-sidebar .cart-header h3 {
+            font-size: 1.4rem;
+            color: var(--dark);
+        }
+
+        .cart-sidebar .cart-header h3 i {
+            color: var(--gold);
+            margin-right: 8px;
+        }
+
+        .cart-sidebar .cart-close {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: var(--text);
+            transition: var(--transition);
+            padding: 4px 8px;
+        }
+
+        .cart-sidebar .cart-close:hover {
+            color: var(--gold);
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .cart-items .empty-cart {
+            text-align: center;
+            color: rgba(61, 52, 46, 0.4);
+            padding: 60px 0;
+        }
+
+        .cart-items .empty-cart i {
+            font-size: 3rem;
+            color: var(--gold-light);
+            margin-bottom: 12px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .cart-item .item-info h5 {
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .cart-item .item-info .item-price {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .cart-item .item-qty {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cart-item .item-qty button {
+            background: var(--cream-dark);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .cart-item .item-qty button:hover {
+            background: var(--gold);
+            color: var(--white);
+        }
+
+        .cart-item .item-qty span {
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .cart-item .item-remove {
+            background: none;
+            border: none;
+            color: rgba(61, 52, 46, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.1rem;
+            padding: 4px;
+        }
+
+        .cart-item .item-remove:hover {
+            color: #d9534f;
+        }
+
+        .cart-footer {
+            padding-top: 20px;
+            border-top: 2px solid var(--cream-dark);
+            margin-top: 16px;
+        }
+
+        .cart-footer .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .cart-footer .cart-total .total-price {
+            color: var(--gold);
+        }
+
+        .cart-footer .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--gold);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .cart-footer .checkout-btn:hover {
+            background: var(--gold-dark);
+            transform: scale(1.01);
+        }
+
+        /* ===== RESERVATION ===== */
+        .reservation {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .reservation .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .reservation-info h3 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .reservation-info h3 span {
+            color: var(--gold);
+        }
+
+        .reservation-info p {
+            color: rgba(61, 52, 46, 0.7);
+            margin-bottom: 24px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+
+        .reservation-info .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .reservation-info .contact-detail i {
+            color: var(--gold);
+            font-size: 1.2rem;
+            width: 28px;
+        }
+
+        .reservation-form {
+            background: var(--cream);
+            padding: 36px 32px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .reservation-form h4 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .reservation-form .form-group {
+            margin-bottom: 16px;
+        }
+
+        .reservation-form label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 4px;
+            color: var(--text);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .reservation-form input,
+        .reservation-form select,
+        .reservation-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            background: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            color: var(--text);
+            outline: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        }
+
+        .reservation-form input:focus,
+        .reservation-form select:focus,
+        .reservation-form textarea:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.15);
+        }
+
+        .reservation-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .reservation-form .btn {
+            width: 100%;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        /* ===== TOAST ===== */
+        .toast-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast {
+            background: var(--dark);
+            color: var(--white);
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateX(120%);
+            animation: slideIn 0.4s forwards;
+            min-width: 260px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .toast.success {
+            border-left-color: #4caf50;
+        }
+
+        .toast.error {
+            border-left-color: #d9534f;
+        }
+
+        .toast i {
+            font-size: 1.3rem;
+            color: var(--gold);
+        }
+
+        .toast.success i {
+            color: #4caf50;
+        }
+
+        .toast.error i {
+            color: #d9534f;
+        }
+
+        .toast .toast-msg {
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        @keyframes slideIn {
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.6);
+            padding: 60px 0 30px;
+        }
+
+        .footer .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer h4 {
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .footer .brand p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            max-width: 300px;
+        }
+
+        .footer .brand .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .footer .brand .logo span {
+            color: var(--gold);
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer ul li a {
+            transition: var(--transition);
+            font-size: 0.95rem;
+        }
+
+        .footer ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer .socials {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+        }
+
+        .footer .socials a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .footer .socials a:hover {
+            background: var(--gold);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .footer .bottom {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 24px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-content .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-image .plate {
+                width: 300px;
+                height: 300px;
+                font-size: 5rem;
+            }
+
+            .hero-image .plate i {
+                font-size: 6rem;
+            }
+
+            .about .container {
+                grid-template-columns: 1fr;
+            }
+
+            .reservation .container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer .container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: rgba(26, 20, 16, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 28px;
+                transform: translateX(100%);
+                transition: var(--transition);
+                padding: 40px;
+            }
+
+            .nav-links.open {
+                transform: translateX(0);
+            }
+
+            .nav-links a {
+                font-size: 1.4rem;
+            }
+
+            .hamburger {
+                display: flex;
+                z-index: 100;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero-image .plate {
+                width: 220px;
+                height: 220px;
+                font-size: 3.5rem;
+            }
+
+            .hero-image .plate i {
+                font-size: 4rem;
+            }
+
+            .hero-stats {
+                gap: 24px;
+                flex-wrap: wrap;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                max-width: 100%;
+                right: -100%;
+            }
+
+            .footer .container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .about-text .features {
+                grid-template-columns: 1fr;
+            }
+
+            .reservation-form {
+                padding: 24px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-content .subtitle {
+                font-size: 0.9rem;
+                letter-spacing: 0.15em;
+            }
+
+            .hero-image .plate {
+                width: 170px;
+                height: 170px;
+                font-size: 2.5rem;
+            }
+
+            .hero-image .plate i {
+                font-size: 3rem;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-utensils"></i> Dima Pivo<span>.</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#menu">Меню</a></li>
+                <li><a href="#reservation">Бронирование</a></li>
+                <li>
+                    <button class="cart-btn" id="cartOpenBtn">
+                        <i class="fas fa-shopping-bag"></i> Корзина
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </li>
+            </ul>
+            <button class="hamburger" id="hamburger" aria-label="Меню">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="home">
+        <div class="hero-pattern"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="subtitle">Добро пожаловать</div>
+                <h1>Dima Pivo <span>—</span> <br />вкус традиций</h1>
+                <p>
+                    Аутентичная русская кухня в самом сердце города. Только
+                    свежие продукты, домашние рецепты и атмосфера настоящего
+                    гостеприимства.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#menu" class="btn btn-primary">
+                        <i class="fas fa-utensil-spoon"></i> Смотреть меню
+                    </a>
+                    <a href="#reservation" class="btn btn-outline">
+                        <i class="fas fa-calendar-check"></i> Забронировать
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>15+</h3>
+                        <p>Лет мастерства</p>
+                    </div>
+                    <div class="stat">
+                        <h3>60+</h3>
+                        <p>Блюд в меню</p>
+                    </div>
+                    <div class="stat">
+                        <h3>4.9</h3>
+                        <p>Рейтинг гостей</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="plate">
+                    <i class="fas fa-utensils"></i>
+                    <span class="label">Dima Pivo</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-image">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <div class="about-text">
+                <h3>О <span>Dima Pivo</span></h3>
+                <p>
+                    Ресторан <strong>Dima Pivo</strong> — это место, где традиции
+                    русской кухни встречаются с современным подходом к
+                    гастрономии. Мы готовим с душой, используя только
+                    фермерские продукты и сезонные ингредиенты.
+                </p>
+                <p>
+                    Наша команда — это семья профессионалов, которые каждый день
+                    создают для вас вкусные и полезные блюда, вдохновляясь
+                    рецептами бабушек и авторскими экспериментами.
+                </p>
+                <ul class="features">
+                    <li><i class="fas fa-check-circle"></i> Свежие продукты</li>
+                    <li><i class="fas fa-check-circle"></i> Домашние рецепты</li>
+                    <li><i class="fas fa-check-circle"></i> Уютная атмосфера</li>
+                    <li><i class="fas fa-check-circle"></i> Шеф-повар с 20+ лет</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MENU ===== -->
+    <section class="menu" id="menu">
+        <div class="container">
+            <div class="section-title">
+                <p>Наше меню</p>
+                <h2>Избранные <span>блюда</span></h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="menu-tabs" id="menuTabs">
+                <button class="active" data-category="all">Все</button>
+                <button data-category="appetizers">Закуски</button>
+                <button data-category="soups">Супы</button>
+                <button data-category="main">Основные</button>
+                <button data-category="desserts">Десерты</button>
+                <button data-category="drinks">Напитки</button>
+            </div>
+
+            <div class="menu-grid" id="menuGrid">
+                <!-- items will be injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== RESERVATION ===== -->
+    <section class="reservation" id="reservation">
+        <div class="container">
+            <div class="reservation-info">
+                <h3>Забронируйте <span>столик</span></h3>
+                <p>
+                    Заполните форму, и мы свяжемся с вами для подтверждения
+                    брони. Мы всегда рады гостям и готовы сделать ваш вечер
+                    незабываемым.
+                </p>
+                <div class="contact-detail">
+                    <i class="fas fa-phone"></i>
+                    <span>+7 (495) 123-45-67</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i>
+                    <span>DimaPivo@mail.ru</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>г. Южно-Сахалинск</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-clock"></i>
+                    <span>Ежедневно 12:00 – 23:00</span>
+                </div>
+            </div>
+            <form class="reservation-form" id="reservationForm">
+                <h4>Оставьте заявку</h4>
+                <div class="form-group">
+                    <label for="resName">Ваше имя</label>
+                    <input type="text" id="resName" placeholder="Иван Петров" required />
+                </div>
+                <div class="form-group">
+                    <label for="resPhone">Телефон</label>
+                    <input type="tel" id="resPhone" placeholder="+7 (495) 123-45-67" required />
+                </div>
+                <div class="form-group">
+                    <label for="resDate">Дата</label>
+                    <input type="date" id="resDate" required />
+                </div>
+                <div class="form-group">
+                    <label for="resTime">Время</label>
+                    <input type="time" id="resTime" required />
+                </div>
+                <div class="form-group">
+                    <label for="resGuests">Количество гостей</label>
+                    <select id="resGuests">
+                        <option value="1">1 гость</option>
+                        <option value="2" selected>2 гостя</option>
+                        <option value="3">3 гостя</option>
+                        <option value="4">4 гостя</option>
+                        <option value="5">5 гостей</option>
+                        <option value="6+">6+ гостей</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="resComment">Комментарий (опционально)</label>
+                    <textarea id="resComment" placeholder="Особые пожелания…"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-calendar-check"></i> Забронировать
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="brand">
+                <div class="logo">Dima Pivo<span>.</span></div>
+                <p>
+                    Ресторан русской кухни с душой. Мы готовим для вас
+                    каждый день с любовью и уважением к традициям.
+                </p>
+                <div class="socials">
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="VK"><i class="fab fa-vk"></i></a>
+                    <a href="#" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div>
+                <h4>Меню</h4>
+                <ul>
+                    <li><a href="#menu">Закуски</a></li>
+                    <li><a href="#menu">Супы</a></li>
+                    <li><a href="#menu">Основные</a></li>
+                    <li><a href="#menu">Десерты</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Информация</h4>
+                <ul>
+                    <li><a href="#about">О нас</a></li>
+                    <li><a href="#reservation">Бронирование</a></li>
+                    <li><a href="#">Доставка</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Контакты</h4>
+                <ul>
+                    <li>+7 (495) 123-45-67</li>
+                    <li>DimaPivo@mail.ru</li>
+                    <li>Тверская, 12, Москва</li>
+                </ul>
+            </div>
+            <div class="bottom">
+                &copy; 2026 Dima pivo. Все права защищены.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== CART SIDEBAR ===== -->
+    <div class="cart-overlay" id="cartOverlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> Корзина</h3>
+            <button class="cart-close" id="cartCloseBtn">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Корзина пуста</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Итого:</span>
+                <span class="total-price" id="cartTotal">0 ₽</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">
+                <i class="fas fa-credit-card"></i> Оформить заказ
+            </button>
+        </div>
+    </div>
+
+    <!-- ===== TOAST CONTAINER ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // ============================================================
+        //  DATA
+        // ============================================================
+        const menuData = [{
+            id: 1,
+            name: 'Сельдь под шубой',
+            category: 'appetizers',
+            price: 450,
+            description: 'Классическая закуска с слоёной подачей: сельдь, свёкла, морковь, картофель, майонез.',
+            weight: '200 г',
+            popular: true,
+            emoji: '🥗'
+        }, {
+            id: 2,
+            name: 'Грибной жульен',
+            category: 'appetizers',
+            price: 520,
+            description: 'Нежные шампиньоны в сливочном соусе под сырной корочкой. Подаётся в кокотнице.',
+            weight: '180 г',
+            popular: false,
+            emoji: '🍄'
+        }, {
+            id: 3,
+            name: 'Борщ с пампушками',
+            category: 'soups',
+            price: 390,
+            description: 'Наваристый украинский борщ на говяжьем бульоне с пампушками и сметаной.',
+            weight: '350 мл',
+            popular: true,
+            emoji: '🍲'
+        }, {
+            id: 4,
+            name: 'Солянка сборная',
+            category: 'soups',
+            price: 420,
+            description: 'Насыщенный суп с тремя видами мяса, копчёностями, оливками и лимоном.',
+            weight: '350 мл',
+            popular: false,
+            emoji: '🥩'
+        }, {
+            id: 5,
+            name: 'Стейк из говядины',
+            category: 'main',
+            price: 890,
+            description: 'Мраморная говядина на гриле до степени прожарки medium rare. Соус демиглас.',
+            weight: '280 г',
+            popular: true,
+            emoji: '🥩'
+        }, {
+            id: 6,
+            name: 'Пельмени сибирские',
+            category: 'main',
+            price: 550,
+            description: 'Домашние пельмени из говядины и свинины, подаются со сметаной и зеленью.',
+            weight: '320 г',
+            popular: false,
+            emoji: '🥟'
+        }, {
+            id: 7,
+            name: 'Котлета по-киевски',
+            category: 'main',
+            price: 620,
+            description: 'Куриная котлета с маслом внутри, панировка и нежное мясо. Гарнир — картофельное пюре.',
+            weight: '300 г',
+            popular: true,
+            emoji: '🍗'
+        }, {
+            id: 8,
+            name: 'Медовик',
+            category: 'desserts',
+            price: 320,
+            description: 'Классический советский торт с тонкими медовыми коржами и сметанным кремом.',
+            weight: '180 г',
+            popular: true,
+            emoji: '🍯'
+        }, {
+            id: 9,
+            name: 'Пирожное "Картошка"',
+            category: 'desserts',
+            price: 240,
+            description: 'Нежное пирожное из бисквитной крошки с масляным кремом и какао.',
+            weight: '120 г',
+            popular: false,
+            emoji: '🍫'
+        }, {
+            id: 10,
+            name: 'Морс клюквенный',
+            category: 'drinks',
+            price: 180,
+            description: 'Освежающий клюквенный морс по домашнему рецепту. Подаётся со льдом.',
+            weight: '400 мл',
+            popular: false,
+            emoji: '🫐'
+        }, {
+            id: 11,
+            name: 'Квас домашний',
+            category: 'drinks',
+            price: 150,
+            description: 'Настоящий хлебный квас собственного производства. Пенится и освежает.',
+            weight: '500 мл',
+            popular: false,
+            emoji: '🍞'
+        }, {
+            id: 12,
+            name: 'Греческий салат',
+            category: 'appetizers',
+            price: 480,
+            description: 'Свежие овощи, оливки, брынза, оливковое масло и орегано.',
+            weight: '250 г',
+            popular: false,
+            emoji: '🥗'
+        }, {
+            id: 13,
+            name: 'Цезарь с курицей',
+            category: 'appetizers',
+            price: 560,
+            description: 'Классический Цезарь с куриным филе, пармезаном, сухариками и соусом.',
+            weight: '280 г',
+            popular: true,
+            emoji: '🥗'
+        }, {
+            id: 14,
+            name: 'Уха царская',
+            category: 'soups',
+            price: 490,
+            description: 'Наваристая уха из трёх видов рыбы: судак, лосось, осётр. Подаётся с зеленью.',
+            weight: '350 мл',
+            popular: false,
+            emoji: '🐟'
+        }, {
+            id: 15,
+            name: 'Чай с облепихой',
+            category: 'drinks',
+            price: 190,
+            description: 'Ароматный чёрный чай с облепихой и мёдом. Согревает и дарит заряд витаминов.',
+            weight: '400 мл',
+            popular: false,
+            emoji: '🍵'
+        }];
+
+        // ============================================================
+        //  STATE
+        // ============================================================
+        let cart = [];
+        let currentCategory = 'all';
+
+        // ============================================================
+        //  DOM REFS
+        // ============================================================
+        const menuGrid = document.getElementById('menuGrid');
+        const menuTabs = document.getElementById('menuTabs');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const cartCountBadge = document.getElementById('cartCount');
+        const cartOpenBtn = document.getElementById('cartOpenBtn');
+        const cartCloseBtn = document.getElementById('cartCloseBtn');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const reservationForm = document.getElementById('reservationForm');
+        const toastContainer = document.getElementById('toastContainer');
+        const navbar = document.getElementById('navbar');
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        // ============================================================
+        //  RENDER MENU
+        // ============================================================
+        function renderMenu(category) {
+            const filtered = category === 'all' ?
+                menuData :
+                menuData.filter(item => item.category === category);
+
+            if (filtered.length === 0) {
+                menuGrid.innerHTML = `
+              <div style="grid-column:1/-1; text-align:center; padding:40px; color: rgba(61,52,46,0.4);">
+                <i class="fas fa-utensils" style="font-size:2rem; display:block; margin-bottom:12px;"></i>
+                В этой категории пока нет блюд
+              </div>
+            `;
+                return;
+            }
+
+            menuGrid.innerHTML = filtered.map(item => `
+            <div class="menu-item" data-id="${item.id}">
+              ${item.popular ? '<span class="badge-popular"><i class="fas fa-star"></i> Хит</span>' : ''}
+              <div class="item-header">
+                <h4>${item.emoji || ''} ${item.name}</h4>
+                <span class="price">${item.price} ₽</span>
+              </div>
+              <p class="description">${item.description}</p>
+              <div class="item-footer">
+                <span class="weight"><i class="fas fa-weight-scale"></i> ${item.weight}</span>
+                <button class="add-btn" data-id="${item.id}">
+                  <i class="fas fa-plus"></i> В корзину
+                </button>
+              </div>
+            </div>
+          `).join('');
+
+            // attach add events
+            document.querySelectorAll('.add-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const id = parseInt(btn.dataset.id);
+                    addToCart(id);
+                });
+            });
+        }
+
+        // ============================================================
+        //  CART
+        // ============================================================
+        function addToCart(id) {
+            const item = menuData.find(i => i.id === id);
+            if (!item) return;
+
+            const existing = cart.find(i => i.id === id);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...item, qty: 1 });
+            }
+            updateCartUI();
+            showToast(`✅ ${item.name} добавлено в корзину`, 'success');
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(i => i.id !== id);
+            updateCartUI();
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                removeFromCart(id);
+                return;
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, i) => sum + i.qty, 0);
+            const totalPrice = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+
+            cartCountBadge.textContent = totalItems;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+              <div class="empty-cart">
+                <i class="fas fa-shopping-bag"></i>
+                <p>Корзина пуста</p>
+              </div>
+            `;
+                cartTotal.textContent = '0 ₽';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = cart.map(item => `
+            <div class="cart-item" data-id="${item.id}">
+              <div class="item-info">
+                <h5>${item.emoji || ''} ${item.name}</h5>
+                <span class="item-price">${item.price} ₽</span>
+              </div>
+              <div class="item-qty">
+                <button class="qty-dec" data-id="${item.id}">−</button>
+                <span>${item.qty}</span>
+                <button class="qty-inc" data-id="${item.id}">+</button>
+                <button class="item-remove" data-id="${item.id}"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+          `).join('');
+
+            // attach events
+            document.querySelectorAll('.qty-inc').forEach(btn => {
+                btn.addEventListener('click', () => changeQty(parseInt(btn.dataset.id), 1));
+            });
+            document.querySelectorAll('.qty-dec').forEach(btn => {
+                btn.addEventListener('click', () => changeQty(parseInt(btn.dataset.id), -1));
+            });
+            document.querySelectorAll('.item-remove').forEach(btn => {
+                btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
+            });
+
+            cartTotal.textContent = `${totalPrice} ₽`;
+        }
+
+        // ============================================================
+        //  TOASTS
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icon = type === 'success' ? 'fa-check-circle' :
+                type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+            toast.innerHTML = `
+            <i class="fas ${icon}"></i>
+            <span class="toast-msg">${message}</span>
+          `;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(120%)';
+                toast.style.transition = '0.4s';
+                setTimeout(() => toast.remove(), 400);
+            }, 3000);
+        }
+
+        // ============================================================
+        //  CART SIDEBAR
+        // ============================================================
+        function openCart() {
+            cartSidebar.classList.add('open');
+            cartOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCart() {
+            cartSidebar.classList.remove('open');
+            cartOverlay.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        cartOpenBtn.addEventListener('click', openCart);
+        cartCloseBtn.addEventListener('click', closeCart);
+        cartOverlay.addEventListener('click', closeCart);
+
+        // ============================================================
+        //  CHECKOUT
+        // ============================================================
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showToast('Корзина пуста, добавьте блюда!', 'error');
+                return;
+            }
+            const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+            const names = cart.map(i => `${i.name} (${i.qty})`).join(', ');
+            showToast(`✅ Заказ оформлен! Сумма: ${total} ₽. Блюда: ${names}`, 'success');
+            cart = [];
+            updateCartUI();
+            closeCart();
+        });
+
+        // ============================================================
+        //  MENU TABS
+        // ============================================================
+        menuTabs.addEventListener('click', (e) => {
+            const btn = e.target.closest('button');
+            if (!btn) return;
+            const cat = btn.dataset.category;
+            if (!cat) return;
+
+            menuTabs.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            currentCategory = cat;
+            renderMenu(cat);
+        });
+
+        // ============================================================
+        //  RESERVATION
+        // ============================================================
+        reservationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('resName').value.trim();
+            const phone = document.getElementById('resPhone').value.trim();
+            const date = document.getElementById('resDate').value;
+            const time = document.getElementById('resTime').value;
+            const guests = document.getElementById('resGuests').value;
+
+            if (!name || !phone || !date || !time) {
+                showToast('Пожалуйста, заполните все обязательные поля', 'error');
+                return;
+            }
+
+            showToast(
+                `✅ ${name}, ваше бронирование на ${date} в ${time} для ${guests} гостей подтверждено!`,
+                'success'
+            );
+            reservationForm.reset();
+        });
+
+        // ============================================================
+        //  NAVBAR SCROLL EFFECT
+        // ============================================================
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ============================================================
+        //  MOBILE HAMBURGER
+        // ============================================================
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('open');
+        });
+
+        // close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+        renderMenu('all');
+        updateCartUI();
+
+        // Set default date for reservation
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        document.getElementById('resDate').value = `${yyyy}-${mm}-${dd}`;
+
+        // Keyboard shortcut: ESC to close cart
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeCart();
+        });
+    </script>
+
+</body>
+
+</html>
